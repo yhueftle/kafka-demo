@@ -24,7 +24,6 @@ producerProperties.put("linger.ms", 1);
 producerProperties.put("buffer.memory", 33554432);
 producerProperties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 producerProperties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-testing
 */
 
 
