@@ -31,7 +31,7 @@ public class KafkaDemoApplication {
         MessageProducer producer = context.getBean(MessageProducer.class);
         MessageListener listener = context.getBean(MessageListener.class);
         /*
-         * Sending a Hello World message to topic 'baeldung'.
+         * Sending a Hello World message to topic 'corgis'.
          * Must be recieved by both listeners with group foo
          * and bar with containerFactory fooKafkaListenerContainerFactory
          * and barKafkaListenerContainerFactory respectively.
@@ -39,6 +39,7 @@ public class KafkaDemoApplication {
          * headersKafkaListenerContainerFactory as container factory
          */
         producer.sendMessage("Hello, World!");
+        System.out.println("1");
         listener.latch.await(10, TimeUnit.SECONDS);
 
         /*
@@ -49,6 +50,7 @@ public class KafkaDemoApplication {
          */
         for (int i = 0; i < 5; i++) {
             producer.sendMessageToPartion("Hello To Partioned Topic!", i);
+            System.out.println("2");
         }
         listener.partitionLatch.await(10, TimeUnit.SECONDS);
 
@@ -58,16 +60,17 @@ public class KafkaDemoApplication {
          * 'World' will be discarded.
          */
         producer.sendMessageToFiltered("Hello Yannick!");
+        System.out.println("3");
         producer.sendMessageToFiltered("Hello World!");
         listener.filterLatch.await(10, TimeUnit.SECONDS);
 
         /*
-         * Sending message to 'greeting' topic. This will send
-         * and recieved a java object with the help of
-         * greetingKafkaListenerContainerFactory.
+         * Sending message to 'turtle' topic. This will send
+         * and receive a java object with the help of
+         * turtlesKafkaListenerContainerFactory.
          */
         producer.sendTurtleMessage(new Turtle("Jimmy", "Red Ear Slider"));
-        listener.greetingLatch.await(10, TimeUnit.SECONDS);
+        listener.greetingLatch.await(20, TimeUnit.SECONDS);
 
         context.close();
     }
@@ -102,7 +105,7 @@ public class KafkaDemoApplication {
         @Value(value = "${turtles.topic.name}")
         private String turtlesTopicName;
 
-        public void sendMessage(String message) {
+        private void sendMessage(String message) {
 
             ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(corgisTopicName, message);
 
@@ -119,15 +122,15 @@ public class KafkaDemoApplication {
             });
         }
 
-        public void sendMessageToPartion(String message, int partition) {
+        private void sendMessageToPartion(String message, int partition) {
             kafkaTemplate.send(partitionsTopicName, partition, null, message);
         }
 
-        public void sendMessageToFiltered(String message) {
+        private void sendMessageToFiltered(String message) {
             kafkaTemplate.send(filtersTopicName, message);
         }
 
-        public void sendTurtleMessage(Turtle turtle) {
+        private void sendTurtleMessage(Turtle turtle) {
             turtleKafkaTemplate.send(turtlesTopicName, turtle);
         }
     }

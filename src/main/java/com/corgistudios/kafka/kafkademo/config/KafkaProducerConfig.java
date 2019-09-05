@@ -15,7 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-/*Properties producerProperties = new Properties();
+/*
+This is an alternative way to set the properties of a producer/consumer
+
+Properties producerProperties = new Properties();
 producerProperties.put("bootstrap.servers", kafkaBootstrapServers);
 producerProperties.put("acks", "all");
 producerProperties.put("retries", 0);
