@@ -14,7 +14,7 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import java.util.HashMap;
 import java.util.Map;
 
-Properties producerProperties = new Properties();
+/*Properties producerProperties = new Properties();
 producerProperties.put("bootstrap.servers", kafkaBootstrapServers);
 producerProperties.put("acks", "all");
 producerProperties.put("retries", 0);
@@ -22,7 +22,8 @@ producerProperties.put("batch.size", 16384);
 producerProperties.put("linger.ms", 1);
 producerProperties.put("buffer.memory", 33554432);
 producerProperties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-producerProperties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+producerProperties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");*/
+
 @Configuration
 public class KafkaProducerConfig {
 
